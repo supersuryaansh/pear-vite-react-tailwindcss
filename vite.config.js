@@ -5,12 +5,24 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  minify: false,
   build: {
     outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
-      input: path.resolve(__dirname, 'src/index.html')
+      input: path.resolve(__dirname, 'src/index.html'),
+      external: ['events', 'stream', 'util']
     }
+  },
+  resolve: {
+    alias: {
+      events: false,
+      stream: false,
+      util: false,
+    }
+  },
+  optimizeDeps: {
+    exclude: ['events', 'stream', 'util']
   },
   server: {
     port: 5173,
